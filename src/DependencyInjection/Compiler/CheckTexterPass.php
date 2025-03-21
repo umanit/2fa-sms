@@ -12,6 +12,10 @@ class CheckTexterPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
+        if (!$container->hasDefinition('umanit_two_factor_sms.security.sms_provider')) {
+            return;
+        }
+
         if (!$container->hasDefinition('texter')) {
             throw new LogicException(
                 'Could not find texter service. Please install symfony/notifier and configure a texter_transports.'
