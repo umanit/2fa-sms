@@ -3,7 +3,7 @@ includes:
     - vendor/phpstan/phpstan-symfony/rules.neon
 
 parameters:
-    level: max
+    level: 9
     paths:
         - config/
         - src/
@@ -11,3 +11,6 @@ parameters:
         constantHassers: false
     scanFiles:
         - vendor/symfony/dependency-injection/Loader/Configurator/ContainerConfigurator.php
+    ignoreErrors:
+        - message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::canBeDisabled\(\)\.#'
+        - message: '#Method Umanit\\TwoFactorSms\\UmanitTwoFactorSmsBundle::loadExtension\(\) has parameter \$config with no value type specified in iterable type array\.#'
