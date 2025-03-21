@@ -1,0 +1,36 @@
+{
+  "name": "umanit/2fa-sms",
+  "description": "Extends scheb/2fa-bundle with two-factor authentication via SMS",
+  "keywords": [
+    "2fa",
+    "two-factor",
+    "two-step",
+    "authentication",
+    "symfony",
+    "sms"
+  ],
+  "type": "symfony-bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Vivien DE BONA",
+      "email": "vdebona@umanit.fr"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "scheb/2fa-bundle": "^7.2",
+    "symfony/notifier": "^6.4 || ^7.2",
+    "symfony/framework-bundle": "^6.4 || ^7.2"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-symfony": "^2.0",
+    "squizlabs/php_codesniffer": "^3.12"
+  },
+  "autoload": {
+    "psr-4": {
+      "Umanit\\TwoFactorSms\\": "src/"
+    }
+  }
+}
