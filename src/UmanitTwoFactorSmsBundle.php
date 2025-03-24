@@ -113,7 +113,7 @@ class UmanitTwoFactorSmsBundle extends AbstractBundle
             $container->import('../config/services/code_texter.php');
 
             $codeTexter = 'umanit_two_factor_sms.texter.auth_code_texter';
-            $container->services()->get($codeTexter)->arg(1, SmsMessageGeneratorInterface::class);
+            $container->services()->get($codeTexter)->arg(1, service(SmsMessageGeneratorInterface::class));
         }
 
         $container->services()->alias(AuthCodeTexterInterface::class, $codeTexter);
