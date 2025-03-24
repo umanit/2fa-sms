@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Umanit\TwoFactorSms\Model\Sms;
 
-interface TwoFactorInterface
+interface TwoFactorSmsInterface
 {
     /**
      * Return true if the user should do two-factor authentication.

@@ -2,3 +2,4 @@ vendor/
 composer.lock
 .php-version
 .phpcs-cache
+.phpunit.result.cache

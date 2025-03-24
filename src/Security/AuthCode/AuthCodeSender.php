@@ -6,7 +6,7 @@ namespace Umanit\TwoFactorSms\Security\AuthCode;
 
 use Scheb\TwoFactorBundle\Model\PersisterInterface;
 use Symfony\Component\Clock\ClockInterface;
-use Umanit\TwoFactorSms\Model\Sms\TwoFactorInterface;
+use Umanit\TwoFactorSms\Model\Sms\TwoFactorSmsInterface;
 use Umanit\TwoFactorSms\Texter\AuthCodeTexterInterface;
 
 final readonly class AuthCodeSender implements AuthCodeSenderInterface
@@ -20,7 +20,7 @@ final readonly class AuthCodeSender implements AuthCodeSenderInterface
     ) {
     }
 
-    public function generateAndSend(TwoFactorInterface $user): void
+    public function generateAndSend(TwoFactorSmsInterface $user): void
     {
         $user->setSmsAuthCode($this->authCodeGenerator->generateCode());
 

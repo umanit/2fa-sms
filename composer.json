@@ -26,11 +26,18 @@
   "require-dev": {
     "phpstan/phpstan": "^2.1",
     "phpstan/phpstan-symfony": "^2.0",
-    "squizlabs/php_codesniffer": "^3.12"
+    "phpunit/phpunit": "^11.5",
+    "squizlabs/php_codesniffer": "^3.12",
+    "symfony/phpunit-bridge": "^7.2"
   },
   "autoload": {
     "psr-4": {
       "Umanit\\TwoFactorSms\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Umanit\\TwoFactorSms\\Tests\\": "tests/"
     }
   }
 }

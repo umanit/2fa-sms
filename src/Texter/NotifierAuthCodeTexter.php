@@ -6,7 +6,7 @@ namespace Umanit\TwoFactorSms\Texter;
 
 use Symfony\Component\Notifier\Message\SmsMessage;
 use Symfony\Component\Notifier\TexterInterface;
-use Umanit\TwoFactorSms\Model\Sms\TwoFactorInterface;
+use Umanit\TwoFactorSms\Model\Sms\TwoFactorSmsInterface;
 
 final readonly class NotifierAuthCodeTexter implements AuthCodeTexterInterface
 {
@@ -16,7 +16,7 @@ final readonly class NotifierAuthCodeTexter implements AuthCodeTexterInterface
     ) {
     }
 
-    public function sendAuthCode(TwoFactorInterface $user): void
+    public function sendAuthCode(TwoFactorSmsInterface $user): void
     {
         $authCode = $user->getSmsAuthCode();
         if (null === $authCode) {

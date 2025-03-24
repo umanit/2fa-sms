@@ -8,7 +8,7 @@ use Scheb\TwoFactorBundle\Security\TwoFactor\AuthenticationContextInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorFormRendererInterface;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\TwoFactorProviderInterface;
 use Symfony\Component\Clock\ClockInterface;
-use Umanit\TwoFactorSms\Model\Sms\TwoFactorInterface;
+use Umanit\TwoFactorSms\Model\Sms\TwoFactorSmsInterface;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeSenderInterface;
 
 final readonly class SmsTwoFactorProvider implements TwoFactorProviderInterface
@@ -24,12 +24,12 @@ final readonly class SmsTwoFactorProvider implements TwoFactorProviderInterface
     {
         $user = $context->getUser();
 
-        return $user instanceof TwoFactorInterface && $user->isSmsAuthEnabled();
+        return $user instanceof TwoFactorSmsInterface && $user->isSmsAuthEnabled();
     }
 
     public function prepareAuthentication(object $user): void
     {
-        if (!$user instanceof TwoFactorInterface) {
+        if (!$user instanceof TwoFactorSmsInterface) {
             return;
         }
 
@@ -38,7 +38,7 @@ final readonly class SmsTwoFactorProvider implements TwoFactorProviderInterface
 
     public function validateAuthenticationCode(object $user, string $authenticationCode): bool
     {
-        if (!$user instanceof TwoFactorInterface) {
+        if (!$user instanceof TwoFactorSmsInterface) {
             return false;
         }
 
