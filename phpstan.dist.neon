@@ -13,4 +13,4 @@ parameters:
         - vendor/symfony/dependency-injection/Loader/Configurator/ContainerConfigurator.php
     ignoreErrors:
         - message: '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::canBeDisabled\(\)\.#'
-        - message: '#Method Umanit\\TwoFactorSms\\UmanitTwoFactorSmsBundle::loadExtension\(\) has parameter \$config with no value type specified in iterable type array\.#'
+        - message: '#Method Umanit\\TwoFactorSms\\UmanitTwoFactorSmsBundle::\w+\(\) has parameter \$config with no value type specified in iterable type array\.#'
