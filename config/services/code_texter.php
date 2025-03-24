@@ -13,6 +13,7 @@ return static function (ContainerConfigurator $container): void {
         ->set('umanit_two_factor_sms.texter.auth_code_texter', NotifierAuthCodeTexter::class)
         ->args([
             service('texter')->ignoreOnInvalid(),
+            abstract_arg('message')
         ])
     ;
 };

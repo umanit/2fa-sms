@@ -80,6 +80,13 @@ return static function (DefinitionConfigurator $definition): void {
                     )
                     ->defaultNull()
                 ->end()
+                ->scalarNode('message')
+                    ->info(<<<TXT
+Message send by the texter. The template string [[auth_code]] will be replaced with the actual auth code.
+TXT
+                    )
+                    ->defaultValue('[[auth_code]]')
+                ->end()
             ->end()
         ->end()
     ;

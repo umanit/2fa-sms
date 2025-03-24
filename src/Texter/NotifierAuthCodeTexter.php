@@ -12,6 +12,7 @@ final readonly class NotifierAuthCodeTexter implements AuthCodeTexterInterface
 {
     public function __construct(
         private TexterInterface $texter,
+        private string $message,
     ) {
     }
 
@@ -24,9 +25,14 @@ final readonly class NotifierAuthCodeTexter implements AuthCodeTexterInterface
 
         $sms = new SmsMessage(
             $user->getSmsAuthRecipient(),
-            $authCode,
+            $this->getMessage($authCode),
         );
 
         $this->texter->send($sms);
+    }
+
+    public function getMessage(string $authCode): string
+    {
+        return str_replace('[[auth_code]]', $authCode, $this->message);
     }
 }
