@@ -1,5 +1,6 @@
 # umanit/2fa-sms
 
+[![Build Status](https://github.com/umanit/2fa-sms/actions/workflows/ci.yaml/badge.svg)](https://github.com/umanit/2fa-sms/actions?query=workflow%3ACI)
 [![Latest Stable Version](https://img.shields.io/packagist/v/umanit/2fa-sms)](https://packagist.org/packages/umanit/2fa-sms)
 [![License](https://poser.pugx.org/umanit/2fa-sms/license.svg)](https://packagist.org/packages/umanit/2fa-sms)
 
