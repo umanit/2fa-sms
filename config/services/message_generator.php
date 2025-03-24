@@ -12,7 +12,7 @@ return static function (ContainerConfigurator $container): void {
     $services
         ->set('umanit_two_factor_sms.texter.sms_message_generator', SmsMessageGenerator::class)
         ->args([
-            abstract_arg('message generator'),
+            abstract_arg('message'),
         ])
     ;
 };

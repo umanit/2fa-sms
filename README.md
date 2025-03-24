@@ -56,6 +56,9 @@ umanit_two_factor_sms:
     # Custom auth code texter service that must implement "Umanit\TwoFactorSms\Texter\AuthCodeTexterInterface".
     code_texter:          null
 
+    # Custom texter message generator service that must implement "Umanit\TwoFactorSms\Texter\SmsMessageGeneratorInterface".
+    message_generator:    null
+
     # Message send by the texter. The template string [[auth_code]] will be replaced with the actual auth code.
     message:              '[[auth_code]]'
 ```
