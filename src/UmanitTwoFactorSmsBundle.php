@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 use Umanit\TwoFactorSms\DependencyInjection\Compiler\CheckTexterPass;
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+
 class UmanitTwoFactorSmsBundle extends AbstractBundle
 {
     public function configure(DefinitionConfigurator $definition): void
@@ -29,6 +31,21 @@ class UmanitTwoFactorSmsBundle extends AbstractBundle
 
         $builder->getDefinition('umanit_two_factor_sms.security.code_generator')->setArgument(0, $config['digits']);
         $builder->getDefinition('umanit_two_factor_sms.security.code_sender')->setArgument(4, $config['expires_after']);
+
+        /** @var ?string $formRenderer */
+        $formRenderer = $config['form_renderer'];
+
+        if (null === $formRenderer) {
+            $formRenderer = 'umanit_two_factor_sms.form_renderer';
+
+            $builder->getDefinition($formRenderer)->setArgument(1, $config['template']);
+        }
+
+        $container
+            ->services()
+            ->get('umanit_two_factor_sms.security.sms_provider')
+            ->arg('$formRenderer', service($formRenderer))
+        ;
     }
 
     public function build(ContainerBuilder $container): void

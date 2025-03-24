@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\DefaultTwoFactorFormRenderer;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeGenerator;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeGeneratorInterface;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeSender;
@@ -16,6 +17,15 @@ return static function (ContainerConfigurator $container): void {
     $services = $container->services();
 
     $services
+        ->set('umanit_two_factor_sms.default_form_renderer', DefaultTwoFactorFormRenderer::class)
+        ->lazy()
+        ->args([
+            service('twig'),
+            abstract_arg('template of the form'),
+        ])
+    ;
+
+    $services
         ->set('umanit_two_factor_sms.security.code_generator', AuthCodeGenerator::class)
         ->args([
             abstract_arg('number digits'),
@@ -25,7 +35,9 @@ return static function (ContainerConfigurator $container): void {
 
     $services
         ->set('umanit_two_factor_sms.texter.auth_code_texter', NotifierAuthCodeTexter::class)
-        ->args([service('texter')->ignoreOnInvalid()])
+        ->args([
+            service('texter')->ignoreOnInvalid(),
+        ])
         ->alias(AuthCodeTexterInterface::class, 'umanit_two_factor_sms.texter.auth_code_texter')
     ;
 
@@ -45,7 +57,7 @@ return static function (ContainerConfigurator $container): void {
         ->set('umanit_two_factor_sms.security.sms_provider', SmsTwoFactorProvider::class)
         ->args([
             service('umanit_two_factor_sms.security.code_sender'),
-            service('scheb_two_factor.security.form_renderer'),
+            abstract_arg('form renderer'),
             service('clock'),
         ])
         ->tag('scheb_two_factor.provider', ['alias' => 'sms'])
