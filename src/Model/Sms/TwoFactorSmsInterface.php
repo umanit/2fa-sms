@@ -24,7 +24,7 @@ interface TwoFactorSmsInterface
     /**
      * Set the authentication code.
      */
-    public function setSmsAuthCode(string $authCode): void;
+    public function setSmsAuthCode(?string $authCode): void;
 
     /**
      * Get the expiration date of the authentication code.
