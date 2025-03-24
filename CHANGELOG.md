@@ -7,40 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+## [1.0.0] - 2025-03-24
 
-- Allow `null` value on `TwoFactorSmsInterface::setSmsAuthCode`.
-
-## [1.1.1] - 2025-03-24
-
-### Fixed
-
-- Fix dynamic auth code texter service declaration.
-
-## [1.1.0] - 2025-03-24
+- Initial release of the bundle 🎉.
 
 ### Added
 
 - Add an overridable service for SMS message generation.
 
-## [1.0.1] - 2025-03-24
+### Changed
+
+- Allow `null` value on `TwoFactorSmsInterface::setSmsAuthCode`.
 
 ### Fixed
 
+- Fix dynamic auth code texter service declaration.
 - Add missing method in `AuthCodeTexterInterface`.
 
-## [1.0.0] - 2025-03-24
-
-### Added
-
-- Initial release of the bundle 🎉.
-
-[Unreleased]: https://github.com/umanit/2fa-sms/compare/1.1.1...HEAD
-
-[1.1.1]: https://github.com/umanit/2fa-sms/compare/1.1.0...1.1.1
-
-[1.1.0]: https://github.com/umanit/2fa-sms/compare/1.0.1...1.1.0
-
-[1.0.1]: https://github.com/umanit/2fa-sms/compare/1.0.0...1.0.1
+[Unreleased]: https://github.com/umanit/2fa-sms/compare/1.0.0...HEAD
 
 [1.0.0]: https://github.com/umanit/2fa-sms/releases/tag/1.0.0
