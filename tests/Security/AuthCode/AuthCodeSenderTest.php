@@ -17,8 +17,8 @@ class AuthCodeSenderTest extends TestCase
     private const AUTH_CODE = '123456';
 
     private MockAuthCodeGenerator $authCodeGenerator;
-    private MockObject|PersisterInterface $persister;
-    private MockObject|AuthCodeTexterInterface $texter;
+    private MockObject&PersisterInterface $persister;
+    private MockObject&AuthCodeTexterInterface $texter;
     private MockClock $clock;
     private AuthCodeSender $authCodeSender;
 
