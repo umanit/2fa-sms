@@ -7,17 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add an overridable service for SMS message generation.
+
 ## [1.0.1] - 2025-03-24
 
 ### Fixed
 
-- Add missing method in `AuthCodeTexterInterface`
+- Add missing method in `AuthCodeTexterInterface`.
 
 ## [1.0.0] - 2025-03-24
 
 ### Added
 
-- Initial release of the bundle 🎉
+- Initial release of the bundle 🎉.
 
 [Unreleased]: https://github.com/umanit/2fa-sms/compare/1.0.1...HEAD
 

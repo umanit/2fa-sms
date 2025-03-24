@@ -13,6 +13,7 @@ use Umanit\TwoFactorSms\DependencyInjection\Compiler\CheckTexterPass;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeGeneratorInterface;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeSenderInterface;
 use Umanit\TwoFactorSms\Texter\AuthCodeTexterInterface;
+use Umanit\TwoFactorSms\Texter\SmsMessageGeneratorInterface;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -35,6 +36,7 @@ class UmanitTwoFactorSmsBundle extends AbstractBundle
 
         $this->configureCodeGenerator($config, $container);
         $this->configureCodeSender($config, $container);
+        $this->configureMessageGenerator($config, $container);
         $this->configureCodeTexter($config, $container);
         $this->configureSmsProvider($config, $container);
     }
@@ -87,6 +89,21 @@ class UmanitTwoFactorSmsBundle extends AbstractBundle
         ;
     }
 
+    private function configureMessageGenerator(array $config, ContainerConfigurator $container): void
+    {
+        /** @var ?string $messageGenerator */
+        $messageGenerator = $config['message_generator'];
+
+        if (null === $messageGenerator) {
+            $container->import('../config/services/message_generator.php');
+
+            $messageGenerator = 'umanit_two_factor_sms.texter.sms_message_generator';
+            $container->services()->get($messageGenerator)->arg(0, $config['message']);
+        }
+
+        $container->services()->alias(SmsMessageGeneratorInterface::class, $messageGenerator);
+    }
+
     private function configureCodeTexter(array $config, ContainerConfigurator $container): void
     {
         /** @var ?string $codeTexter */
@@ -96,7 +113,7 @@ class UmanitTwoFactorSmsBundle extends AbstractBundle
             $container->import('../config/services/code_texter.php');
 
             $codeTexter = 'umanit_two_factor_sms.texter.auth_code_texter';
-            $container->services()->get($codeTexter)->arg(1, $config['message']);
+            $container->services()->get($codeTexter)->arg(1, SmsMessageGeneratorInterface::class);
         }
 
         $container->services()->alias(AuthCodeTexterInterface::class, $codeTexter);

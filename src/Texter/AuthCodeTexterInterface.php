@@ -12,9 +12,4 @@ interface AuthCodeTexterInterface
      * Send the authentication code to the user.
      */
     public function sendAuthCode(TwoFactorSmsInterface $user): void;
-
-    /**
-     * Generate the message to send. The template string [[auth_code]] will be replaced with the actual auth code.
-     */
-    public function getMessage(string $authCode): string;
 }

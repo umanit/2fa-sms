@@ -4,56 +4,73 @@ declare(strict_types=1);
 
 namespace Umanit\TwoFactorSms\Tests\Texter;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Notifier\Message\SmsMessage;
 use Symfony\Component\Notifier\TexterInterface;
 use Umanit\TwoFactorSms\Model\Sms\TwoFactorSmsInterface;
 use Umanit\TwoFactorSms\Texter\NotifierAuthCodeTexter;
+use Umanit\TwoFactorSms\Texter\SmsMessageGeneratorInterface;
 
 class NotifierAuthCodeTexterTest extends WebTestCase
 {
-    private const RECIPIENT_MOBILE = '+33623456789';
-    private const MESSAGE = 'Your OTP code: [[auth_code]]';
-    private const AUTH_CODE = '123456';
+    private MockObject&TexterInterface $texter;
+    private MockObject&SmsMessageGeneratorInterface $messageGenerator;
+    private NotifierAuthCodeTexter $authCodeTexter;
 
-    public function testSendSMS(): void
+    protected function setUp(): void
     {
-        $texter = $this->createMock(TexterInterface::class);
+        $this->texter = $this->createMock(TexterInterface::class);
+        $this->messageGenerator = $this->createMock(SmsMessageGeneratorInterface::class);
 
-        $user = $this->createMock(TwoFactorSmsInterface::class);
-        $user->method('getSmsAuthCode')->willReturn(self::AUTH_CODE);
-        $user->method('getSmsAuthRecipient')->willReturn(self::RECIPIENT_MOBILE);
-
-        $expectedSms = new SmsMessage('+33623456789', 'Your OTP code: 123456');
-        $texter
-            ->expects($this->once())
-            ->method('send')
-            ->with(
-                $this->callback(function (SmsMessage $sms) use ($expectedSms) {
-                    return $sms->getPhone() === $expectedSms->getPhone()
-                        && $sms->getSubject() === $expectedSms->getSubject();
-                })
-            )
-        ;
-
-        $authCodeTexter = new NotifierAuthCodeTexter($texter, self::MESSAGE);
-        $authCodeTexter->sendAuthCode($user);
+        $this->authCodeTexter = new NotifierAuthCodeTexter($this->texter, $this->messageGenerator);
     }
 
-    public function testNoSendWhenUserHasNoAuthCode(): void
+    public function testThatEmailIsSent(): void
     {
-        $texter = $this->createMock(TexterInterface::class);
-        $texter->expects($this->never())->method('send');
-
-        $authCodeTexter = new NotifierAuthCodeTexter($texter, self::MESSAGE);
-
         $user = $this->createMock(TwoFactorSmsInterface::class);
+
         $user
             ->expects($this->once())
+            ->method('getSmsAuthCode')
+            ->willReturn('123456')
+        ;
+
+        $this->messageGenerator
+            ->expects($this->once())
+            ->method('generateMessage')
+            ->with($user)
+            ->willReturn($this->createMock(SmsMessage::class))
+        ;
+
+        $this->texter
+            ->expects($this->once())
+            ->method('send')
+        ;
+
+        $this->authCodeTexter->sendAuthCode($user);
+    }
+
+    public function testThatNullAuthCodeSendsNoEmail(): void
+    {
+        $user = $this->createMock(TwoFactorSmsInterface::class);
+
+        $user
+            ->expects($this->any())
             ->method('getSmsAuthCode')
             ->willReturn(null)
         ;
 
-        $authCodeTexter->sendAuthCode($user);
+        $this->messageGenerator
+            ->expects($this->never())
+            ->method('generateMessage')
+        ;
+
+        $this->texter
+            ->expects($this->never())
+            ->method('send')
+        ;
+
+        $this->authCodeTexter->sendAuthCode($user);
     }
 }

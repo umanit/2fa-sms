@@ -10,6 +10,7 @@ use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeGeneratorInterface;
 use Umanit\TwoFactorSms\Security\AuthCode\AuthCodeSenderInterface;
 use Umanit\TwoFactorSms\Texter\AuthCodeTexterInterface;
+use Umanit\TwoFactorSms\Texter\SmsMessageGeneratorInterface;
 
 return static function (DefinitionConfigurator $definition): void {
     $definition
@@ -76,6 +77,15 @@ return static function (DefinitionConfigurator $definition): void {
                         \sprintf(
                             'Custom auth code texter service that must implement "%s".',
                             AuthCodeTexterInterface::class
+                        )
+                    )
+                    ->defaultNull()
+                ->end()
+                ->scalarNode('message_generator')
+                    ->info(
+                        \sprintf(
+                            'Custom texter message generator service that must implement "%s".',
+                            SmsMessageGeneratorInterface::class
                         )
                     )
                     ->defaultNull()
