@@ -19,21 +19,21 @@ return static function (DefinitionConfigurator $definition): void {
                 ->scalarNode('form_renderer')
                     ->info(
                         \sprintf(
-                            'A custom form renderer service that must implement "%s"',
+                            'A custom form renderer service that must implement "%s".',
                             TwoFactorFormRendererInterface::class
                         )
                     )
                     ->defaultNull()
                 ->end()
                 ->scalarNode('template')
-                    ->info(\sprintf('Twig template to pass to "%s"', DefaultTwoFactorFormRenderer::class))
+                    ->info(\sprintf('Twig template to pass to "%s".', DefaultTwoFactorFormRenderer::class))
                     ->cannotBeEmpty()
                     ->defaultValue('@SchebTwoFactor/Authentication/form.html.twig')
                 ->end()
                 ->scalarNode('code_generator')
                     ->info(
                         \sprintf(
-                            'Custom auth code generator service that must implement "%s"',
+                            'Custom auth code generator service that must implement "%s".',
                             AuthCodeGeneratorInterface::class
                         )
                     )
@@ -47,7 +47,7 @@ return static function (DefinitionConfigurator $definition): void {
                 ->scalarNode('code_sender')
                     ->info(
                         \sprintf(
-                            'Custom auth code sender service that must implement "%s"',
+                            'Custom auth code sender service that must implement "%s".',
                             AuthCodeSenderInterface::class
                         )
                     )
@@ -74,7 +74,7 @@ return static function (DefinitionConfigurator $definition): void {
                 ->scalarNode('code_texter')
                     ->info(
                         \sprintf(
-                            'Custom auth code texter service that must implement "%s"',
+                            'Custom auth code texter service that must implement "%s".',
                             AuthCodeTexterInterface::class
                         )
                     )
